@@ -1,5 +1,5 @@
-﻿using IniciandoTestes.Contratos;
-using IniciandoTestes.Entidades;
+﻿using IniciandoTestes.Domain.Contracts.RepositoryContracts;
+using IniciandoTestes.Domain.Entities;
 using System;
 using System.Collections.Generic;
 
@@ -7,19 +7,16 @@ namespace IniciandoTestes.Tests.Fakes
 {
     internal class ClienteRepositoryFake : IClienteRepository
     {
-        public void AddCliente(Cliente cliente)
-        {
-
-        }
+        public void AddCliente(Cliente cliente) { }
 
         public List<Cliente> GetAll()
         {
             return new List<Cliente>();
         }
 
-        public Cliente GetCliente(Guid id)
+        public Cliente GetCliente(int id)
         {
-            var idFake = new Guid("12ACA6F1-EECF-4CBA-A299-081FFF88EDE5");
+            int idFake = 1261421885;
             if (id == idFake )
                 return new Cliente()
                 {

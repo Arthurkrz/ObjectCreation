@@ -1,4 +1,5 @@
-﻿using IniciandoTestes.Entidades;
+﻿using IniciandoTestes.Domain.Entities;
+using IniciandoTestes.Domain.Enum;
 using Bogus;
 using System;
 
