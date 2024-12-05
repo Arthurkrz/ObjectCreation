@@ -47,14 +47,9 @@ namespace IniciandoTestes.Tests.ServiceTests
         public void AdicionarFuncionario_DeveEmitirException_QuandoNomeCurto()
         {
             // Arrange
-            Funcionario funcionario = new Funcionario
-            {
-                Nome = "a",
-                Nascimento = _faker.Date.Between(DateTime.Now.AddYears(-50),
-                                                 DateTime.Now.AddYears(-70)),
-                Senioridade = Senioridade.Senior,
-                Salario = _faker.Random.Int(8000, 20000)
-            };
+            Funcionario funcionario = FuncionarioMother.
+                                      GetFuncionarioNomeCurto
+                                      (Senioridade.Senior);
 
             // Act & Assert
             Assert.Throws<FormatException>(() => _sut.AdicionarFuncionario
@@ -65,13 +60,9 @@ namespace IniciandoTestes.Tests.ServiceTests
         public void AdicionarFuncionario_DeveEmitirException_QuandoNascimentoInvalido()
         {
             // Arrange
-            Funcionario funcionario = new Funcionario
-            {
-                Nome = _faker.Name.FullName(),
-                Nascimento = DateTime.Now.AddYears(-20),
-                Senioridade = Senioridade.Senior,
-                Salario = _faker.Random.Int(8000, 20000)
-            };
+            Funcionario funcionario = FuncionarioMother.
+                                      GetFuncionarioNascimentoInvalido
+                                      (Senioridade.Senior);
 
             // Act & Assert
             Assert.Throws<Exception>(() => _sut.AdicionarFuncionario(funcionario));
@@ -131,7 +122,31 @@ namespace IniciandoTestes.Tests.ServiceTests
                     Nascimento = _faker.Date.Between(DateTime.Now.AddDays(-21),
                                                      DateTime.Now.AddDays(-50)),
                     Senioridade = Senioridade.Junior,
+                    Salario = 3200
+                }
+            };
+
+            yield return new object[]
+            {
+                new Funcionario
+                {
+                    Nome = _faker.Name.FullName(),
+                    Nascimento = _faker.Date.Between(DateTime.Now.AddDays(-21),
+                                                     DateTime.Now.AddDays(-50)),
+                    Senioridade = Senioridade.Junior,
                     Salario = 6000
+                }
+            };
+
+            yield return new object[]
+            {
+                new Funcionario
+                {
+                    Nome = _faker.Name.FullName(),
+                    Nascimento = _faker.Date.Between(DateTime.Now.AddDays(-21),
+                                                     DateTime.Now.AddDays(-50)),
+                    Senioridade = Senioridade.Junior,
+                    Salario = 5500
                 }
             };
 
@@ -155,7 +170,31 @@ namespace IniciandoTestes.Tests.ServiceTests
                     Nascimento = _faker.Date.Between(DateTime.Now.AddDays(-21),
                                                      DateTime.Now.AddDays(-50)),
                     Senioridade = Senioridade.Pleno,
+                    Salario = 5500
+                }
+            };
+
+            yield return new object[]
+            {
+                new Funcionario
+                {
+                    Nome = _faker.Name.FullName(),
+                    Nascimento = _faker.Date.Between(DateTime.Now.AddDays(-21),
+                                                     DateTime.Now.AddDays(-50)),
+                    Senioridade = Senioridade.Pleno,
                     Salario = 9000
+                }
+            };
+
+            yield return new object[]
+            {
+                new Funcionario
+                {
+                    Nome = _faker.Name.FullName(),
+                    Nascimento = _faker.Date.Between(DateTime.Now.AddDays(-21),
+                                                     DateTime.Now.AddDays(-50)),
+                    Senioridade = Senioridade.Pleno,
+                    Salario = 8000
                 }
             };
 
@@ -168,6 +207,42 @@ namespace IniciandoTestes.Tests.ServiceTests
                                                      DateTime.Now.AddDays(50)),
                     Senioridade = Senioridade.Senior,
                     Salario = 7000
+                }
+            };
+
+            yield return new object[]
+            {
+                new Funcionario
+                {
+                    Nome = _faker.Name.FullName(),
+                    Nascimento = _faker.Date.Between(DateTime.Now.AddDays(-21),
+                                                     DateTime.Now.AddDays(50)),
+                    Senioridade = Senioridade.Senior,
+                    Salario = 8000
+                }
+            };
+
+            yield return new object[]
+            {
+                new Funcionario
+                {
+                    Nome = _faker.Name.FullName(),
+                    Nascimento = _faker.Date.Between(DateTime.Now.AddDays(-21),
+                                                     DateTime.Now.AddDays(50)),
+                    Senioridade = Senioridade.Senior,
+                    Salario = 51000
+                }
+            };
+
+            yield return new object[]
+            {
+                new Funcionario
+                {
+                    Nome = _faker.Name.FullName(),
+                    Nascimento = _faker.Date.Between(DateTime.Now.AddDays(-21),
+                                                     DateTime.Now.AddDays(50)),
+                    Senioridade = Senioridade.Senior,
+                    Salario = 50000
                 }
             };
         }

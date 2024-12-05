@@ -1,11 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 17
-VisualStudioVersion = 17.11.35312.102
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.34301.259
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IniciandoTestes", "IniciandoTestes\IniciandoTestes.csproj", "{FB678293-8287-4822-B8DD-2B17528AF4CE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IniciandoTestes", "IniciandoTestes\IniciandoTestes.csproj", "{FB678293-8287-4822-B8DD-2B17528AF4CE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IniciandoTestes.Tests", "IniciandoTestes.Tests\IniciandoTestes.Tests.csproj", "{465E1024-7F69-41A7-B30A-5F3D6E40163E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IniciandoTestes.Tests", "IniciandoTestes.Tests\IniciandoTestes.Tests.csproj", "{465E1024-7F69-41A7-B30A-5F3D6E40163E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -2,6 +2,7 @@
 {
     public enum Escolaridade
     {
+        NA,
         Fundamental, 
         Medio, 
         Superior

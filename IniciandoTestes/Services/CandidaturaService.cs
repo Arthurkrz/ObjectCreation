@@ -34,7 +34,7 @@ namespace IniciandoTestes.Services
             return matricula;
         }
 
-        public bool CandidatoAptoAoConcurso(Candidato candidato, Concurso concurso)
+        private bool CandidatoAptoAoConcurso(Candidato candidato, Concurso concurso)
         {
             if (candidato.Escolaridade == Escolaridade.Superior)
                 return true;
@@ -51,7 +51,7 @@ namespace IniciandoTestes.Services
 
         }
 
-        public bool CandidatoEhValido(Candidato candidato) 
+        private bool CandidatoEhValido(Candidato candidato) 
         {
             if (candidato == null)
                 return false;

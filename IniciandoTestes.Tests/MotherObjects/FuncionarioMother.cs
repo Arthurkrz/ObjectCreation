@@ -2,6 +2,9 @@
 using IniciandoTestes.Domain.Enum;
 using Bogus;
 using System;
+using Xunit;
+using System.Collections.Generic;
+using System.Collections;
 
 namespace IniciandoTestes.Tests.MotherObjects
 {
@@ -29,6 +32,26 @@ namespace IniciandoTestes.Tests.MotherObjects
 
             return faker.Generate();
 
+        }
+
+        public static Funcionario GetFuncionarioNomeCurto(Senioridade senioridade)
+        {
+            Faker<Funcionario> faker = new Faker<Funcionario>();
+            faker.RuleFor(x => x.Nome, "a")
+                 .RuleFor(x => x.Nascimento, f => f.Date.Past(50, DateTime.Now.AddYears(-21)))
+                 .RuleFor(x => x.Senioridade, senioridade);
+
+            return faker.Generate();
+        }
+
+        public static Funcionario GetFuncionarioNascimentoInvalido(Senioridade senioridade)
+        {
+            Faker<Funcionario> faker = new Faker<Funcionario>();
+            faker.RuleFor(x => x.Nome, f => f.Name.FirstName())
+                 .RuleFor(x => x.Nascimento, f => f.Date.Past(20, DateTime.Now))
+                 .RuleFor(x => x.Senioridade, senioridade);
+
+            return faker.Generate();
         }
     }
 }
