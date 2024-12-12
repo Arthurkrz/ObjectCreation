@@ -1,13 +1,13 @@
 ﻿using Bogus;
-using System.Collections.Generic;
-using System;
-using Moq;
-using Xunit;
-using IniciandoTestes.Domain.Entities;
 using IniciandoTestes.Domain.Contracts.RepositoryContracts;
-using IniciandoTestes.Services;
-using IniciandoTestes.Tests.MotherObjects;
+using IniciandoTestes.Domain.Entities;
 using IniciandoTestes.Domain.Enum;
+using IniciandoTestes.Services;
+using Moq;
+using System;
+using System.Collections.Generic;
+using Xunit;
+using IniciandoTestes.Tests.Builders;
 
 namespace IniciandoTestes.Tests.ServiceTests
 {
@@ -26,10 +26,9 @@ namespace IniciandoTestes.Tests.ServiceTests
 
         [Theory]
         [MemberData(nameof(GetFuncionariosData))]
-        public void AdicionarFuncionario_DeveConcluir_QuandoDadosValidos
-                    (Funcionario funcionario)
+        public void AdicionarFuncionario_DeveConcluir_QuandoDadosValidos(Funcionario funcionario)
         {
-            //Act & Assert
+            // Act & Assert
             _sut.AdicionarFuncionario(funcionario);
         }
 
@@ -47,22 +46,30 @@ namespace IniciandoTestes.Tests.ServiceTests
         public void AdicionarFuncionario_DeveEmitirException_QuandoNomeCurto()
         {
             // Arrange
-            Funcionario funcionario = FuncionarioMother.
-                                      GetFuncionarioNomeCurto
-                                      (Senioridade.Senior);
+            Funcionario funcionario = new FuncionarioBuilder().NomeInvalido()
+                                                              .DataNascimentoValida()
+                                                              .SalarioValido
+                                                              (Senioridade.Senior)
+                                                              .SenioridadeValida
+                                                              (Senioridade.Senior)
+                                                              .Build();
 
             // Act & Assert
             Assert.Throws<FormatException>(() => _sut.AdicionarFuncionario
-                                                      (funcionario));
+                                                     (funcionario));
         }
 
         [Fact]
         public void AdicionarFuncionario_DeveEmitirException_QuandoNascimentoInvalido()
         {
             // Arrange
-            Funcionario funcionario = FuncionarioMother.
-                                      GetFuncionarioNascimentoInvalido
-                                      (Senioridade.Senior);
+            Funcionario funcionario = new FuncionarioBuilder().NomeValido()
+                                                              .DataNascimentoInvalida()
+                                                              .SalarioValido
+                                                              (Senioridade.Senior)
+                                                              .SenioridadeValida
+                                                              (Senioridade.Senior)
+                                                              .Build();
 
             // Act & Assert
             Assert.Throws<Exception>(() => _sut.AdicionarFuncionario(funcionario));
@@ -81,20 +88,35 @@ namespace IniciandoTestes.Tests.ServiceTests
         {
             yield return new object[]
             {
-               FuncionarioMother.GetFuncionarioValidoPorSenioridade
-                                 (Senioridade.Junior)
-            };
-
-            yield return new object[] 
-            {
-                FuncionarioMother.GetFuncionarioValidoPorSenioridade
-                                  (Senioridade.Pleno)
+                new FuncionarioBuilder().NomeValido()
+                                        .DataNascimentoValida()
+                                        .SalarioValido
+                                        (Senioridade.Junior)
+                                        .SenioridadeValida
+                                        (Senioridade.Junior)
+                                        .Build()
             };
 
             yield return new object[]
             {
-                FuncionarioMother.GetFuncionarioValidoPorSenioridade
-                                  (Senioridade.Senior)
+                new FuncionarioBuilder().NomeValido()
+                                        .DataNascimentoValida()
+                                        .SalarioValido
+                                        (Senioridade.Pleno)
+                                        .SenioridadeValida
+                                        (Senioridade.Pleno)
+                                        .Build()
+            };
+
+            yield return new object[]
+            {
+                new FuncionarioBuilder().NomeValido()
+                                        .DataNascimentoValida()
+                                        .SalarioValido
+                                        (Senioridade.Senior)
+                                        .SenioridadeValida
+                                        (Senioridade.Senior)
+                                        .Build()
             };
         }
 
@@ -104,146 +126,122 @@ namespace IniciandoTestes.Tests.ServiceTests
 
             yield return new object[]
             {
-                new Funcionario
-                {
-                    Nome = _faker.Name.FullName(),
-                    Nascimento = _faker.Date.Between(DateTime.Now.AddDays(-21), 
-                                                     DateTime.Now.AddDays(-50)),
-                    Senioridade = Senioridade.Junior,
-                    Salario = 3000
-                }
+                new FuncionarioBuilder().NomeValido()
+                                        .DataNascimentoValida()
+                                        .SalarioInvalido(3000)
+                                        .SenioridadeValida
+                                        (Senioridade.Junior)
+                                        .Build()
             };
 
             yield return new object[]
             {
-                new Funcionario
-                {
-                    Nome = _faker.Name.FullName(),
-                    Nascimento = _faker.Date.Between(DateTime.Now.AddDays(-21),
-                                                     DateTime.Now.AddDays(-50)),
-                    Senioridade = Senioridade.Junior,
-                    Salario = 3200
-                }
+                new FuncionarioBuilder().NomeValido()
+                                        .DataNascimentoValida()
+                                        .SalarioInvalido(3200)
+                                        .SenioridadeValida
+                                        (Senioridade.Junior)
+                                        .Build()
             };
 
             yield return new object[]
             {
-                new Funcionario
-                {
-                    Nome = _faker.Name.FullName(),
-                    Nascimento = _faker.Date.Between(DateTime.Now.AddDays(-21),
-                                                     DateTime.Now.AddDays(-50)),
-                    Senioridade = Senioridade.Junior,
-                    Salario = 6000
-                }
+                new FuncionarioBuilder().NomeValido()
+                                        .DataNascimentoValida()
+                                        .SalarioInvalido(6000)
+                                        .SenioridadeValida
+                                        (Senioridade.Junior)
+                                        .Build()
             };
 
             yield return new object[]
             {
-                new Funcionario
-                {
-                    Nome = _faker.Name.FullName(),
-                    Nascimento = _faker.Date.Between(DateTime.Now.AddDays(-21),
-                                                     DateTime.Now.AddDays(-50)),
-                    Senioridade = Senioridade.Junior,
-                    Salario = 5500
-                }
+                new FuncionarioBuilder().NomeValido()
+                                        .DataNascimentoValida()
+                                        .SalarioInvalido(5500)
+                                        .SenioridadeValida
+                                        (Senioridade.Junior)
+                                        .Build()
             };
 
             yield return new object[]
             {
-                new Funcionario
-                {
-                    Nome = _faker.Name.FullName(),
-                    Nascimento = _faker.Date.Between(DateTime.Now.AddDays(-21),
-                                                     DateTime.Now.AddDays(-50)),
-                    Senioridade = Senioridade.Pleno,
-                    Salario = 5000
-                }
+                new FuncionarioBuilder().NomeValido()
+                                        .DataNascimentoValida()
+                                        .SalarioInvalido(5000)
+                                        .SenioridadeValida
+                                        (Senioridade.Pleno)
+                                        .Build()
             };
 
             yield return new object[]
             {
-                new Funcionario
-                {
-                    Nome = _faker.Name.FullName(),
-                    Nascimento = _faker.Date.Between(DateTime.Now.AddDays(-21),
-                                                     DateTime.Now.AddDays(-50)),
-                    Senioridade = Senioridade.Pleno,
-                    Salario = 5500
-                }
+                new FuncionarioBuilder().NomeValido()
+                                        .DataNascimentoValida()
+                                        .SalarioInvalido(5500)
+                                        .SenioridadeValida
+                                        (Senioridade.Pleno)
+                                        .Build()
             };
 
             yield return new object[]
             {
-                new Funcionario
-                {
-                    Nome = _faker.Name.FullName(),
-                    Nascimento = _faker.Date.Between(DateTime.Now.AddDays(-21),
-                                                     DateTime.Now.AddDays(-50)),
-                    Senioridade = Senioridade.Pleno,
-                    Salario = 9000
-                }
+                new FuncionarioBuilder().NomeValido()
+                                        .DataNascimentoValida()
+                                        .SalarioInvalido(9000)
+                                        .SenioridadeValida
+                                        (Senioridade.Pleno)
+                                        .Build()
             };
 
             yield return new object[]
             {
-                new Funcionario
-                {
-                    Nome = _faker.Name.FullName(),
-                    Nascimento = _faker.Date.Between(DateTime.Now.AddDays(-21),
-                                                     DateTime.Now.AddDays(-50)),
-                    Senioridade = Senioridade.Pleno,
-                    Salario = 8000
-                }
+                new FuncionarioBuilder().NomeValido()
+                                        .DataNascimentoValida()
+                                        .SalarioInvalido(8000)
+                                        .SenioridadeValida
+                                        (Senioridade.Pleno)
+                                        .Build()
             };
 
             yield return new object[]
             {
-                new Funcionario
-                {
-                    Nome = _faker.Name.FullName(),
-                    Nascimento = _faker.Date.Between(DateTime.Now.AddDays(-21), 
-                                                     DateTime.Now.AddDays(50)),
-                    Senioridade = Senioridade.Senior,
-                    Salario = 7000
-                }
+                new FuncionarioBuilder().NomeValido()
+                                        .DataNascimentoValida()
+                                        .SalarioInvalido(7000)
+                                        .SenioridadeValida
+                                        (Senioridade.Senior)
+                                        .Build()
             };
 
             yield return new object[]
             {
-                new Funcionario
-                {
-                    Nome = _faker.Name.FullName(),
-                    Nascimento = _faker.Date.Between(DateTime.Now.AddDays(-21),
-                                                     DateTime.Now.AddDays(50)),
-                    Senioridade = Senioridade.Senior,
-                    Salario = 8000
-                }
+                new FuncionarioBuilder().NomeValido()
+                                        .DataNascimentoValida()
+                                        .SalarioInvalido(8000)
+                                        .SenioridadeValida
+                                        (Senioridade.Senior)
+                                        .Build()
             };
 
             yield return new object[]
             {
-                new Funcionario
-                {
-                    Nome = _faker.Name.FullName(),
-                    Nascimento = _faker.Date.Between(DateTime.Now.AddDays(-21),
-                                                     DateTime.Now.AddDays(50)),
-                    Senioridade = Senioridade.Senior,
-                    Salario = 51000
-                }
+                new FuncionarioBuilder().NomeValido()
+                                        .DataNascimentoValida()
+                                        .SalarioInvalido(510000)
+                                        .SenioridadeValida
+                                        (Senioridade.Senior)
+                                        .Build()
             };
 
             yield return new object[]
             {
-                new Funcionario
-                {
-                    Nome = _faker.Name.FullName(),
-                    Nascimento = _faker.Date.Between(DateTime.Now.AddDays(-21),
-                                                     DateTime.Now.AddDays(50)),
-                    Senioridade = Senioridade.Senior,
-                    Salario = 50000
-                }
+                new FuncionarioBuilder().NomeValido()
+                                        .DataNascimentoValida()
+                                        .SalarioInvalido(500000)
+                                        .SenioridadeValida
+                                        (Senioridade.Senior)
+                                        .Build()
             };
         }
     }

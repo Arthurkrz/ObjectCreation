@@ -2,6 +2,7 @@
 {
     public enum Senioridade
     {
+        NA,
         Junior, 
         Pleno, 
         Senior

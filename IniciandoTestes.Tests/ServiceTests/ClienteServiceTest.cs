@@ -2,7 +2,7 @@
 using IniciandoTestes.Domain.Contracts.RepositoryContracts;
 using IniciandoTestes.Domain.Entities;
 using IniciandoTestes.Services;
-using IniciandoTestes.Tests.MotherObjects;
+using IniciandoTestes.Tests.Builders;
 using Moq;
 using System;
 using Xunit;
@@ -27,7 +27,7 @@ namespace IniciandoTestes.Tests.ServiceTests
         {
             //Arrange
             _mockRepository.Setup(x => x.GetCliente(It.IsAny<int>())).Returns(new Cliente());
-            var cliente = ClienteMother.GetClienteValido();
+            var cliente = ClienteBuilder.GetClienteValido();
 
             //Act
             _sut.AddCliente(cliente);
@@ -42,7 +42,7 @@ namespace IniciandoTestes.Tests.ServiceTests
         public void AddCliente_DeveQuebrar_QuandoClienteJaExiste()
         {
             //Arrange
-            Cliente cliente = ClienteMother.GetClienteSemId();
+            Cliente cliente = ClienteBuilder.GetClienteSemId();
             _mockRepository.Setup(x => x.GetCliente(It.IsAny<int>())).Returns(cliente);
 
             //Act & Assert
